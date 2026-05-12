@@ -17,12 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let scores = { X: 0, O: 0 };
 
     const winningConditions = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]             // Diagonals
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
     ];
 
-    // Initialization
     function init() {
         cells.forEach(cell => {
             cell.addEventListener('click', handleCellClick);
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         vsAI = isAI;
         modePvpBtn.classList.toggle('active', !isAI);
         modePvaiBtn.classList.toggle('active', isAI);
-        scores = { X: 0, O: 0 }; // Reset scores on mode change
+        scores = { X: 0, O: 0 };
         updateScores();
         restartGame();
     }
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         makeMove(index, currentPlayer);
 
         if (gameActive && vsAI && currentPlayer === 'O') {
-            // Slight delay for AI to make it feel natural
             setTimeout(makeAIMove, 400);
         }
     }
@@ -71,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cell.classList.add('occupied');
 
         checkWinCondition();
-        
+
         if (gameActive) {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             updateTurnIndicator();
@@ -118,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function announceWin(player, winningCells) {
         scores[player]++;
         updateScores();
-        
+
         winningCells.forEach(index => {
             cells[index].classList.add('winning-cell');
         });
@@ -142,17 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
         board = ['', '', '', '', '', '', '', '', ''];
         currentPlayer = 'X';
         gameActive = true;
-        
+
         cells.forEach(cell => {
             cell.textContent = '';
-            cell.className = 'cell'; // Resets to just 'cell'
+            cell.className = 'cell';
         });
-        
+
         modal.classList.add('hidden');
         updateTurnIndicator();
     }
 
-    // AI Logic (Minimax Algorithm)
     function makeAIMove() {
         if (!gameActive) return;
 
@@ -222,6 +219,5 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
-    // Start
     init();
 });
